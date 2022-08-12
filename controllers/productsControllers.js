@@ -1,5 +1,6 @@
 const express = require('express');
 const productsServices = require('../services/productsServices');
+const validation = require('../middlewares/validation');
 
 const productsControllers = express.Router();
 
@@ -29,9 +30,8 @@ productsControllers.get('/:id', async (req, res, next) => {
   }
 });
 
-productsControllers.post('/', async (req, res, next) => {
+productsControllers.post('/', validation.productName, async (req, res, next) => {
   const { name } = req.body;
-  console.log(name);
   try {
     const id = await productsServices.addProduct(name);
     if (!id) return res.status(404).json(response.addFail);
