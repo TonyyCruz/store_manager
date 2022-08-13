@@ -30,12 +30,12 @@ const getAll = async () => {
 const getById = async (id) => {
   const query = `SELECT
   s.date, sp.product_id AS productId, sp.quantity 
-  FROM StoreManager.sales AS s WHERE s.id=?
-  INNER JOIN StoreManager.sales_products AS sp ON sp.sale_id = s.id
-  GROUP BY s.id`;
+  FROM StoreManager.sales_products AS sp
+  INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id
+  WHERE sp.sale_id=?`;
 
   const [data] = await connection.query(query, [id]);
-  console.log('test', data);
+  return data;
 };
 
 module.exports = {

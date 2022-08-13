@@ -1,5 +1,9 @@
 const salesModels = require('../models/salesModels');
 
+const response = {
+  saleNotFount: { message: 'Sale not found' },
+};
+
 const registerSales = async (itemsSold) => {
   const id = await salesModels.addSalesProducts(itemsSold);
   return {
@@ -16,7 +20,10 @@ const getAllSales = async () => {
 
 const getSalesById = async (id) => {
   const data = await salesModels.getById(id);
-  if (!data || data.length === 0) return { status: 404, message: 'Sale not found' };
+
+  if (data === undefined || data.length === 0) {
+    return { status: 404, message: response.saleNotFount };
+  }
   return { status: 200, data };
 };
 
