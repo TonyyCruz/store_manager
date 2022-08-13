@@ -8,7 +8,7 @@ const response = {
 };
 
 const testProductId = async (sales) => {
-  const idNotExist = sales.some(({ productId }) => !productId);
+  const idNotExist = sales.some(({ productId }) => productId === undefined);
   if (idNotExist) return { status: 400, message: response.idRequired };
 
   const bdProducts = await productsModels.getAll();
@@ -20,8 +20,7 @@ const testProductId = async (sales) => {
 };
 
 const testQuantity = (sales) => {
-  const notExist = sales.some(({ quantity }) => !quantity);
-  console.log('test of quantity', notExist);
+  const notExist = sales.some(({ quantity }) => quantity === undefined);
   if (notExist) return { status: 400, message: response.quantityRequired };
 
   const wrongValue = sales.some(({ quantity }) => quantity < 1);

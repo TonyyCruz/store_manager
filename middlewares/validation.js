@@ -8,8 +8,8 @@ const productName = (req, res, next) => {
   next();
 };
 
-const saleProducts = (req, res, next) => {
-  const { status, message } = postSalesProduct(req.body);
+const saleProducts = async (req, res, next) => {
+  const { status, message } = await postSalesProduct(req.body);
   if (status) return res.status(status).json(message);
   next();
 };
