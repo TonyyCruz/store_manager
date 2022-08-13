@@ -41,7 +41,6 @@ const salesValidation = async (sales) => {
 
 const postSalesProduct = async (sales) => {
   const { status, message } = await salesValidation(sales);
-  console.log('response of validation', status, message);
   if (status) return { status, message };
   return {};
 };
