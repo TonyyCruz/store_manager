@@ -23,7 +23,8 @@ productsControllers.get('/:id', async (req, res, next) => {
   }
 });
 
-productsControllers.post('/', validation.productName, async (req, res, next) => {
+productsControllers.post('/', validation.productName,
+  async (req, res, next) => {
   const { name } = req.body;
   try {
     const { status, message, id } = await productsServices.addProduct(name);
@@ -43,6 +44,17 @@ productsControllers.put('/:id', validation.productName, validation.productExists
   } catch (err) {
     next(err);
   }
-});
+  });
+
+productsControllers.delete('/:id', validation.productExists,
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const { status, message } = await productsServices.productDelete(id);
+      res.status(status).json('' || message);
+    } catch (err) {
+      next(err);
+    }
+  });
 
 module.exports = productsControllers;

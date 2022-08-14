@@ -4,6 +4,7 @@ const response = {
   notFound: { message: 'Product not found' },
   addFail: { message: 'Addition fail' },
   severeError: { message: 'lines were affected, Severe error' },
+  deleteFail: { message: 'Delete dail' },
 };
 
 const getAllProducts = async () => {
@@ -31,9 +32,17 @@ const productUpdate = async (productId, name) => {
   return { status: 200, data: { id: productId, name } };
 };
 
+const productDelete = async (productId) => {
+  const affectedRows = await productsModels.exclude(productId);
+  if (!affectedRows) return { status: 404, message: response.deleteFail };
+  if (affectedRows > 1) return { status: 500, message: `${affectedRows} ${response.severeError}` };
+  return { status: 204 };
+};
+
 module.exports = {
   getAllProducts,
   getProduct,
   addProduct,
   productUpdate,
+  productDelete,
 };
