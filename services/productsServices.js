@@ -28,7 +28,7 @@ const productUpdate = async (productId, name) => {
   const affectedRows = await productsModels.update(productId, name);
   if (!affectedRows) return { status: 404, message: response.notFound };
   if (affectedRows > 1) return { status: 500, message: `${affectedRows} ${response.severeError}` };
-  return { status: 200, data: { productId, name } };
+  return { status: 200, data: { id: productId, name } };
 };
 
 module.exports = {
