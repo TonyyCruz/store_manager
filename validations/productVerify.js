@@ -14,7 +14,7 @@ const productName = (name) => {
 
 const productExists = async (id) => {
   const product = await models.getById(id);
-  if (!product.id) return { status: 404, message: response.notFound };
+  if (!product) return { status: 404, message: response.notFound };
   return {};
 };
 
