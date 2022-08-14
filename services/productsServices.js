@@ -3,6 +3,7 @@ const productsModels = require('../models/productsModels');
 const response = {
   notFound: { message: 'Product not found' },
   addFail: { message: 'Addition fail' },
+  severeError: { message: 'lines were affected, Severe error' },
 };
 
 const getAllProducts = async () => {
@@ -23,8 +24,16 @@ const id = await productsModels.addToDb(productId);
   return { status: 201, id };
 };
 
+const productUpdate = async (productId, name) => {
+  const affectedRows = await productsModels.update(productId, name);
+  if (!affectedRows) return { status: 404, message: response.notFound };
+  if (affectedRows > 1) return { status: 500, message: `${affectedRows} ${response.severeError}` };
+  return { status: 200, data: { productId, name } };
+};
+
 module.exports = {
   getAllProducts,
   getProduct,
   addProduct,
+  productUpdate,
 };

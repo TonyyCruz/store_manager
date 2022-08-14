@@ -33,4 +33,16 @@ productsControllers.post('/', validation.productName, async (req, res, next) => 
   }
 });
 
+productsControllers.put('/:id', validation.productName, validation.productExists,
+  async (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
+    const { status, message, data } = await productsServices.productUpdate(id, name);
+    res.status(status).json(data || message);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = productsControllers;

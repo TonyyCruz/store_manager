@@ -33,16 +33,16 @@ const salesValidation = async (sales) => {
   const idTest = await testProductId(sales);
   if (idTest.status) return { message: idTest.message, status: idTest.status };
 
-  const qTest = testQuantity(sales);
-  if (qTest.status) return { message: qTest.message, status: qTest.status };
+  const quantityTest = testQuantity(sales);
+  if (quantityTest.status) return { message: quantityTest.message, status: quantityTest.status };
 
   return {};
 };
 
-const postSalesProduct = async (sales) => {
+const salesProductVerify = async (sales) => {
   const { status, message } = await salesValidation(sales);
   if (status) return { status, message };
   return {};
 };
 
-module.exports = { postSalesProduct };
+module.exports = { salesProductVerify };
