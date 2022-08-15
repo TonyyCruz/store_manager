@@ -1,4 +1,4 @@
-const connection = require('../database');
+const connection = require('../database/connection');
 
 const getAll = async () => {
   const query = 'SELECT * FROM StoreManager.products';

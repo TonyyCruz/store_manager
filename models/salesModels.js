@@ -1,4 +1,4 @@
-const connection = require('../database');
+const connection = require('../database/connection');
 
 const addSales = async () => {
   const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW())';
