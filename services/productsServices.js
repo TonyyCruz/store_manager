@@ -9,7 +9,7 @@ const response = {
 
 const getAllProducts = async () => {
   const products = await productsModels.getAll();
-  if (!products || products.length === 0) return { status: 404, message: response.notFound };
+  if (!products) return { status: 404, message: response.notFound };
   return { status: 200, data: products };
 };
 

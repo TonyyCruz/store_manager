@@ -20,11 +20,13 @@ describe('Testa a camada "models" da rota "/products".', () => {
         expect(result[0]).to.be.a('object');
         expect(result[2]).to.be.a('object');
       });
+
       it('Verifica se o objeto retornado da rota  GET "/products" comtem um "id" com um numero e um "name" com uma string', async () => {
         const result = await productsModel.getAll();
         expect(result[0]).to.have.property('id').that.is.a('number');
         expect(result[0]).to.have.property('name').that.is.a('string');
       });
+      
       it('verifica se os dados retornados estão corretos', async () => {
         const result = await productsModel.getAll();
         expect(result[1]).to.deep.equal({ id: 2, name: 'Traje de encolhimento' });
@@ -48,8 +50,3 @@ describe('Testa a camada "models" da rota "/products".', () => {
 
   });
 });
-
-
-
-
-expect({ a: 1 }).to.have.property('a').that.is.a('number');
