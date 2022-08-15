@@ -63,7 +63,7 @@ describe('Testa a camada "services" da rota "/products".', () => {
       });
 
       it('Testa se caso a função "productsServices.getAProduct" receba dados invalidos, retorna uma mensagem de erro e o "status 404', async () => {
-        const result = await productsServices.getAProduct(1);
+        const result = await productsServices.getAProduct(50);
         const compare = { status: 404, message: { message: 'Product not found' } }
         expect(result).to.deep.equal(compare);
       });

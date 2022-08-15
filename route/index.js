@@ -1,10 +1,10 @@
 const express = require('express');
-const productsControllers = require('../controllers/productsControllers');
-const salesControllers = require('../controllers/salesControllers');
+const productsRouters = require('./productsRouters');
+const salesRouters = require('./salesRouters');
 
 const routers = express.Router();
 
-routers.use('/products', productsControllers);
-routers.use('/sales', salesControllers);
+routers.use('/products', productsRouters);
+routers.use('/sales', salesRouters);
 
 module.exports = routers;
