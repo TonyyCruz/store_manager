@@ -13,7 +13,7 @@ const getAllProducts = async () => {
   return { status: 200, data: products };
 };
 
-const getProduct = async (id) => {
+const getAProduct = async (id) => {
   const product = await productsModels.getById(id);
   if (!product || product.length === 0) return { status: 404, message: response.notFound };
   return { status: 200, data: product };  
@@ -41,7 +41,7 @@ const productDelete = async (productId) => {
 
 module.exports = {
   getAllProducts,
-  getProduct,
+  getAProduct,
   addProduct,
   productUpdate,
   productDelete,

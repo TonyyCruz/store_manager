@@ -6,7 +6,7 @@ const mock = require('../../mock');
 
 describe('Testa a camada "models" da rota "/products".', () => {
   describe('Testa o método "GET" da rota "/products".', () => {
-    describe('Testa a função "getAll"', () => {
+    describe('Testa a função "productsModel.getAll"', () => {
       before(() => {
         sinon.stub(connection, 'query').resolves([mock.products])
       });
@@ -26,14 +26,15 @@ describe('Testa a camada "models" da rota "/products".', () => {
         expect(result[0]).to.have.property('id').that.is.a('number');
         expect(result[0]).to.have.property('name').that.is.a('string');
       });
-      
+
       it('verifica se os dados retornados estão corretos', async () => {
         const result = await productsModel.getAll();
         expect(result[1]).to.deep.equal({ id: 2, name: 'Traje de encolhimento' });
       })
     });
 
-    describe('Testa a função "getById"', () => {
+
+    describe('Testa a função "productsModel.getById"', () => {
       before(() => {
         sinon.stub(connection, 'query').resolves([[mock.products[2]]])
       });

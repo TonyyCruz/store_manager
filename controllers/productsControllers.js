@@ -16,7 +16,7 @@ productsControllers.get('/', async (_req, res, next) => {
 productsControllers.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   try {
-    const { status, message, data } = await productsServices.getProduct(id);
+    const { status, message, data } = await productsServices.getAProduct(id);
     res.status(status).json(data || message);
   } catch (err) {
     next(err);
