@@ -26,7 +26,7 @@ const productsModels = {
     return affectedRows;
   },
 
-  exclude: async (id) => {
+  deleteAProduct: async (id) => {
     const query = `DELETE FROM StoreManager.products
     WHERE id=?`;
     const [{ affectedRows }] = await connection.query(query, [id]);

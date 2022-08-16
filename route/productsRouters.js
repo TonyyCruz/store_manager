@@ -13,6 +13,6 @@ productsRouter.post('/', validation.productName, productsControllers.addAProduct
 productsRouter.put('/:id', validation.productName, validation.productExists,
   productsControllers.updateAProduct);
 
-productsRouter.delete('/', validation.productExists, productsControllers.deleteAProduct);
+productsRouter.delete('/:id', validation.productExists, productsControllers.deleteAProduct);
 
 module.exports = productsRouter;

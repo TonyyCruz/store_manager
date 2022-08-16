@@ -37,7 +37,7 @@ const productsServices = {
   },
 
   deleteAProduct: async (productId) => {
-    const affectedRows = await productsModels.exclude(productId);
+    const affectedRows = await productsModels.deleteAProduct(productId);
     if (!affectedRows) return { status: 404, message: response.deleteFail };
     if (affectedRows > 1) {
       return { status: 500, message: `${affectedRows} ${response.severeError}` };
