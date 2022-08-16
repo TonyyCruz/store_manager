@@ -84,7 +84,7 @@ describe('Testa a camada "models" da rota "/products".', () => {
 
   //  ========================= PUT ========================= //
 
-  describe.only('Testa o método PUT da rota /products', () => {
+  describe('Testa o método PUT da rota /products', () => {
     describe('Testa a função "updateAProduct"', () => {
 
       const affectedRows = { affectedRows: 1 };
@@ -101,6 +101,28 @@ describe('Testa a camada "models" da rota "/products".', () => {
         expect(result).to.equal(1);
       })
 
+    });
+  });
+
+
+  //  ========================= DELETE ========================= //
+
+  describe('Testa o método DELETE da rota /products', () => {
+    describe('Testa a função "deleteAProduct"', () => {
+
+      const affectedRows = { affectedRows: 1 };
+
+      before(() => {
+        sinon.stub(connection, 'query').resolves([affectedRows])
+      });
+      after(() => {
+        connection.query.restore();
+      });
+
+      it('Verifica se a a função "deleteAProduct" devolve a quantidade de linhas afetadas', async () => {
+        const result = await productsModels.deleteAProduct();
+        expect(result).to.equal(1);
+      })
     });
   });
 });
