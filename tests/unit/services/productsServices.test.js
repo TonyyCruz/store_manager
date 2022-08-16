@@ -5,7 +5,7 @@ const productsServices = require('../../../services/productsServices');
 const mock = require('../../mock');
 
 describe('Testa a camada "services" da rota "/products".', () => {
-  describe('Testa o método "GET" da rota "/products".', () => {
+  describe('Testa o método "GET"', () => {
     describe('Testa a função "productsServices.getAllProducts"', () => {
       before(() => {
         sinon.stub(productsModels, 'getAll').resolves(mock.products)
@@ -41,10 +41,10 @@ describe('Testa a camada "services" da rota "/products".', () => {
 
     describe('Testa a função "productsServices.getAProduct"', () => {
       before(() => {
-        sinon.stub(productsModels, 'getAll').resolves(mock.products[0])
+        sinon.stub(productsModels, 'getById').resolves(mock.products[0])
       });
       after(() => {
-        productsModels.getAll.restore();
+        productsModels.getById.restore();
       });
 
       it('Verifica se a funcao "productsServices.getAProduct" retorna um objeto "data" contendo os dados corretos e um "status 200" ', async () => {

@@ -5,7 +5,7 @@ const connection = require('../../../database/connection');
 const mock = require('../../mock');
 
 describe('Testa a camada "models" da rota "/products".', () => {
-  describe('Testa o método "GET" da rota "/products".', () => {
+  describe('Testa o método "GET"', () => {
     describe('Testa a função "productsModel.getAll"', () => {
       before(() => {
         sinon.stub(connection, 'query').resolves([mock.products])
