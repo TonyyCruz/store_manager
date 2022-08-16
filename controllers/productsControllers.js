@@ -43,7 +43,6 @@ const productsControllers = {
 
   deleteAProduct: async (req, res, next) => {
     const { id } = req.params;
-    console.log('call');
     try {
       const { status, message } = await productsServices.deleteAProduct(id);
       res.status(status).json('' || message);

@@ -39,7 +39,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
     });
 
 
-    describe('Testa a função "productsServices.getById"', () => {
+    describe('Testa a função "productsServices.getById" com um id "existente"', () => {
 
       const req = {};
       const res = {};
@@ -71,20 +71,38 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
       });
     });
 
-    // describe('Testa caso a função do banco de dados envie dados invalidos', () => {
-    //   before(() => {
-    //     sinon.stub(productsModels, 'getById').resolves(undefined)
-    //   });
-    //   after(() => {
-    //     productsModels.getById.restore();
-    //   });
 
-      // it('Testa se caso a função "productsServices.getById" receba dados invalidos, retorna uma mensagem de erro e o "status 404', async () => {
-      //   const result = await productsServices.getById(1);
-      //   const compare = { status: 404, message: { message: 'Product not found' } }
-      //   expect(result).to.deep.equal(compare);
-      // });
-    // });
+    describe('Testa a função "productsServices.getById" com um id "inexistente"', () => {
+
+      const req = {};
+      const res = {};
+      const next = (err) => { err }
+
+      before(() => {
+        req.params = sinon.stub().returns()
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+
+        sinon.stub(productsServices, 'getById').resolves({
+          status: 200, data: []
+        });
+      });
+
+      after(() => {
+        productsServices.getById.restore();
+      });
+
+      it('Verifica se retorna um status 200', async () => {
+        await productsControllers.getById(req, res, next);
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
+      });
+
+      it('Verifica se "data" retorna um array vazio', async () => {
+        await productsControllers.getById(req, res, next);
+        expect(res.json.calledWith([])).to.be.true;
+      });
+    });
 
   });
 });
