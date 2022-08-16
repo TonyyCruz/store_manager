@@ -3,7 +3,7 @@ const productsServices = require('../services/productsServices');
 const productsControllers = {
   getAll: async (_req, res, next) => {
     try {
-      const { message, status, data } = await productsServices.getAllProducts();
+      const { message, status, data } = await productsServices.getAll();
       res.status(status).json(data || message);
     } catch (err) {
       next(err);
@@ -13,7 +13,7 @@ const productsControllers = {
   getById: async (req, res, next) => {
     const { id } = req.params;
     try {
-      const { status, message, data } = await productsServices.getAProduct(id);
+      const { status, message, data } = await productsServices.getById(id);
       res.status(status).json(data || message);
     } catch (err) {
       next(err);
@@ -23,7 +23,7 @@ const productsControllers = {
   addAProduct: async (req, res, next) => {
     const { name } = req.body;
     try {
-      const { status, message, id } = await productsServices.addProduct(name);
+      const { status, message, id } = await productsServices.addAProduct(name);
       res.status(status).json({ id, name } || message);
     } catch (err) {
       next(err);
@@ -34,7 +34,7 @@ const productsControllers = {
     const { id } = req.params;
     const { name } = req.body;
     try {
-      const { status, message, data } = await productsServices.productUpdate(id, name);
+      const { status, message, data } = await productsServices.updateAProduct(id, name);
       res.status(status).json(data || message);
     } catch (err) {
       next(err);
@@ -44,7 +44,7 @@ const productsControllers = {
   deleteAProduct: async (req, res, next) => {
     const { id } = req.params;
     try {
-      const { status, message } = await productsServices.productDelete(id);
+      const { status, message } = await productsServices.deleteAProduct(id);
       res.status(status).json('' || message);
     } catch (err) {
       next(err);

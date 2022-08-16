@@ -11,69 +11,80 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
       const req = {};
       const res = {};
       const next = (err) => { err };
+      const arrayOfProducts = mock.products;
 
       before(() => {
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
 
-        sinon.stub(productsServices, 'getAllProducts').resolves({
-          status: 200, data: mock.products
+        sinon.stub(productsServices, 'getAll').resolves({
+          status: 200, data: arrayOfProducts
         });
       });
 
       after(() => {
-        productsServices.getAllProducts.restore();
+        productsServices.getAll.restore();
       });
 
       it('Verifica se a rota "/" retorna um status 200', async () => {
         await productsControllers.getAll(req, res, next);
         expect(res.status.calledWith(200)).to.be.true;
-      expect(res.status.calledOnce).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
       });
 
       it('Verifica se a rota "/" retorna um "array" com "objetos" contendo todos os produtos', async () => {
         await productsControllers.getAll(req, res, next);
-        expect(res.json.calledWith(mock.products)).to.be.true;
+        expect(res.json.calledWith(arrayOfProducts)).to.be.true;
       });
-
-      it('Verifica se o objeto retornado da rota  GET "/products" comtem um "id" com um numero e um "name" com uma string', async () => {
-        const result = await productsServices.getAllProducts();
-        expect(result.data[1]).to.have.property('id').that.is.a('number');
-        expect(result.data[1]).to.have.property('name').that.is.a('string');
-      });
-
     });
 
 
-    describe.only('Testa a função "productsServices.getAProduct"', () => {
+    describe('Testa a função "productsServices.getById"', () => {
+
+      const req = {};
+      const res = {};
+      const next = (err) => { err };
+      const objectWithOneProduct = mock.products[0];
+
       before(() => {
-        sinon.stub(productsModels, 'getAll').resolves(mock.products[0])
-      });
-      after(() => {
-        productsModels.getAll.restore();
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+        req.params = sinon.stub().returns();
+        sinon.stub(productsServices, 'getById').resolves({
+          status: 200, data: objectWithOneProduct
+        });
       });
 
-      it('Verifica se a funcao "productsServices.getAProduct" retorna um objeto "data" contendo os dados corretos e um "status 200" ', async () => {
-        const result = await productsServices.getAProduct(1);
-        const compare = { status: 200, data: { id: 1, name: 'Martelo de Thor' } }
-        expect(result).to.deep.equal(compare);
+      after(() => {
+        productsServices.getById.restore();
+      });
+
+      it('Verifica se a funcao "productsServices.getById" retorna um "status 200" ', async () => {
+        await productsControllers.getById(req, res, next);
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
+      });
+
+      it('Verifica se o objeto é retornado corretamente', async () => {
+        await productsControllers.getById(req, res, next);
+        expect(res.json.calledWith(objectWithOneProduct)).to.be.true;
       });
     });
 
-    describe('Testa caso a função do banco de dados envie dados invalidos', () => {
-      before(() => {
-        sinon.stub(productsModels, 'getById').resolves(undefined)
-      });
-      after(() => {
-        productsModels.getById.restore();
-      });
+    // describe('Testa caso a função do banco de dados envie dados invalidos', () => {
+    //   before(() => {
+    //     sinon.stub(productsModels, 'getById').resolves(undefined)
+    //   });
+    //   after(() => {
+    //     productsModels.getById.restore();
+    //   });
 
-      it('Testa se caso a função "productsServices.getAProduct" receba dados invalidos, retorna uma mensagem de erro e o "status 404', async () => {
-        const result = await productsServices.getAProduct(1);
-        const compare = { status: 404, message: { message: 'Product not found' } }
-        expect(result).to.deep.equal(compare);
-      });
-    });
+      // it('Testa se caso a função "productsServices.getById" receba dados invalidos, retorna uma mensagem de erro e o "status 404', async () => {
+      //   const result = await productsServices.getById(1);
+      //   const compare = { status: 404, message: { message: 'Product not found' } }
+      //   expect(result).to.deep.equal(compare);
+      // });
+    // });
 
   });
 });
