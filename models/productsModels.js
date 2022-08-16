@@ -13,13 +13,13 @@ const productsModels = {
     return data[0];
   },
 
-  addToDb: async (product) => {
+  addAProduct: async (product) => {
     const query = 'INSERT INTO StoreManager.products (name) VALUE (?)';
     const [{ insertId }] = await connection.query(query, [product]);
     return insertId;
   },
 
-  update: async (id, name) => {
+  updateAProduct: async (id, name) => {
     const query = `UPDATE  StoreManager.products SET name=?
     WHERE id=?`;
     const [{ affectedRows }] = await connection.query(query, [name, id]);

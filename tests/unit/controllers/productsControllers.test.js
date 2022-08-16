@@ -5,6 +5,10 @@ const productsControllers = require('../../../controllers/productsControllers');
 const mock = require('../../mock');
 
 describe('Testa a camada "controllers" da rota "/products".', () => {
+
+
+  //  ========================= GET ========================= //
+  
   describe('Testa o método "GET" da rota "/products".', () => {
     describe('Testa a rota "/" de "productsControllers"', () => {
 
@@ -103,6 +107,11 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
         expect(res.json.calledWith([])).to.be.true;
       });
     });
+  });
 
+  //  ========================= POST ========================= //
+  
+  describe('Testa o método "POST" da camada /products', () => {
+    
   });
 });

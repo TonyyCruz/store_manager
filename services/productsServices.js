@@ -21,13 +21,13 @@ const productsServices = {
   },
 
   addAProduct: async (productId) => {
-    const id = await productsModels.addToDb(productId);
+    const id = await productsModels.addAProduct(productId);
     if (!id) return { status: 404, message: response.addFail };
     return { status: 201, id };
   },
 
   updateAProduct: async (productId, name) => {
-    const affectedRows = await productsModels.update(productId, name);
+    const affectedRows = await productsModels.updateAProduct(productId, name);
     if (!affectedRows) return { status: 404, message: response.notFound };
     if (affectedRows > 1) {
       return { status: 500, message: `${affectedRows} ${response.severeError}` };
