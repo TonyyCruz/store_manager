@@ -5,10 +5,15 @@ const productsServices = require('../../../services/productsServices');
 const mock = require('../../mock');
 
 describe('Testa a camada "services" da rota "/products".', () => {
+
+  //  ========================= GET ========================= //
+
   describe('Testa o método "GET"', () => {
     describe('Testa a função "productsServices.getAll"', () => {
+
+      const arrayWithObjectsOfProducts = mock.products;
       before(() => {
-        sinon.stub(productsModels, 'getAll').resolves(mock.products)
+        sinon.stub(productsModels, 'getAll').resolves(arrayWithObjectsOfProducts)
       });
       after(() => {
         productsModels.getAll.restore();
@@ -34,14 +39,17 @@ describe('Testa a camada "services" da rota "/products".', () => {
 
       it('verifica se os dados retornados estão corretos', async () => {
         const result = await productsServices.getAll();
-        expect(result).to.deep.equal({ status: 200, data: mock.products });
+        expect(result).to.deep.equal({ status: 200, data: arrayWithObjectsOfProducts });
       })
     });
 
 
     describe('Testa a função "productsServices.getById"', () => {
+
+      const objectWithOneProduct = mock.products[0];
+
       before(() => {
-        sinon.stub(productsModels, 'getById').resolves(mock.products[0])
+        sinon.stub(productsModels, 'getById').resolves(objectWithOneProduct)
       });
       after(() => {
         productsModels.getById.restore();
@@ -49,8 +57,8 @@ describe('Testa a camada "services" da rota "/products".', () => {
 
       it('Verifica se a funcao "productsServices.getById" retorna um objeto "data" contendo os dados corretos e um "status 200" ', async () => {
         const result = await productsServices.getById(1);
-        const compare = { status: 200, data: { id: 1, name: 'Martelo de Thor' } }
-        expect(result).to.deep.equal(compare);
+        const expectedResult = { status: 200, data: { id: 1, name: 'Martelo de Thor' } }
+        expect(result).to.deep.equal(expectedResult);
       });
     });
 
@@ -64,10 +72,51 @@ describe('Testa a camada "services" da rota "/products".', () => {
 
       it('Testa se caso a função "productsServices.getById" receba dados invalidos, retorna uma mensagem de erro e o "status 404', async () => {
         const result = await productsServices.getById(50);
-        const compare = { status: 404, message: { message: 'Product not found' } }
-        expect(result).to.deep.equal(compare);
+        const expectedResult = { status: 404, message: { message: 'Product not found' } }
+        expect(result).to.deep.equal(expectedResult);
+      });
+    });
+  });
+
+
+  //  ========================= POST ========================= //
+  describe('Testa o método "POST"', () => {
+    describe('Testa caso de sucesso Da função "productsServices.addAProduct"', () => {
+      
+      const productId = 6;
+
+      before(() => {
+        sinon.stub(productsModels, 'addAProduct').resolves(productId)
+      });
+      after(() => {
+        productsModels.addAProduct.restore();
+      });
+
+      it('verifica se retorna o status 201 e id do item adicionado', async () => {
+        const result = await productsServices.addAProduct();
+        const expectedResult = { status: 201, id: 6 };
+        expect(result).to.deep.equals(expectedResult)
       });
     });
 
+
+    describe.only('Testa caso a função "productsServices.addAProduct" receba dados invalidos de productsModels', () => {
+
+      const productId = undefined;
+
+      before(() => {
+        sinon.stub(productsModels, 'addAProduct').resolves(productId)
+      });
+      after(() => {
+        productsModels.addAProduct.restore();
+      });
+
+      it('verifica se retorna o status 404 e a mensagem "Addition fail"', async () => {
+        const result = await productsServices.addAProduct();
+        console.log('teste', result);
+        const expectedResult = { status: 404, message: { message: 'Addition fail' } };
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
   });
 });
