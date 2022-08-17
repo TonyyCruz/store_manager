@@ -22,8 +22,8 @@ const salesControllers = {
 
   registerSale: async (req, res, next) => {
     try {
-      const { id, itemsSold, status } = await salesServices.registerSale(req.body);
-      res.status(status).json({ id, itemsSold });
+      const { id, data, status } = await salesServices.registerSale(req.body);
+      res.status(status).json({ id, itemsSold: data });
     } catch (err) {
       next(err);
     }

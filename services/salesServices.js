@@ -9,7 +9,7 @@ const salesServices = {
     const id = await salesModels.addSalesProducts(itemsSold);
     return {
       id,
-      itemsSold,
+      data: itemsSold,
       status: 201,
     };
   },
