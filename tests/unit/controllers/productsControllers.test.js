@@ -171,7 +171,6 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
       it('Verifica se retorna em caso de falha envia a mensagem "Action Failed"', async () => {
         await productsControllers.addAProduct(req, res, next);
-        console.log(res.json.args[0]);
         expect(res.json.calledWith(errorMessage)).to.be.true;
       });
     });
@@ -180,7 +179,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
   //  ========================= PUT ========================= //
 
-  describe.only('Testa o método "PUT" da camada /products função productsControllers.updateAProduct', () => {
+  describe('Testa o método "PUT" da camada /products função productsControllers.updateAProduct', () => {
     describe('testa casos de sucesso', () => {
       const req = { body: { name: 'test' }, params: 2 };
       const res = {};
@@ -208,8 +207,34 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
       it('Verifica se retorna em caso de falha envia a mensagem "Action Failed"', async () => {
         await productsControllers.updateAProduct(req, res, next);
-        console.log(res.json.args[0]);
         expect(res.json.calledWith(returnedObject)).to.be.true;
+      });
+    });
+
+
+    describe('testa casos de falha', () => {
+      const req = { body: { name: 'test' }, params: 2 };
+      const res = {};
+      const next = (err) => { err };
+      const returnedMessage = { message: 'Action Failed' };
+
+      before(() => {
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+
+        sinon.stub(productsServices, 'updateAProduct').resolves({
+          status: 404, message: returnedMessage
+        });
+      });
+
+      after(() => {
+        productsServices.updateAProduct.restore();
+      });
+
+      it('Verifica se retorna status 404', async () => {
+        await productsControllers.updateAProduct(req, res, next);
+        expect(res.status.calledWith(404)).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
       });
     });
   });
@@ -220,7 +245,28 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
   describe('Testa o método "DELETE" da camada /products função productsControllers.deleteAProduct', () => {
     describe('testa casos de sucesso', () => {
+      const req = { params: 2 };
+      const res = {};
+      const next = (err) => { err };
 
+      before(() => {
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+
+        sinon.stub(productsServices, 'deleteAProduct').resolves({
+          status: 204
+        });
+      });
+
+      after(() => {
+        productsServices.deleteAProduct.restore();
+      });
+
+      it('Verifica se retorna status 204', async () => {
+        await productsControllers.deleteAProduct(req, res, next);
+        expect(res.status.calledWith(204)).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
+      });
     });
   });
 });
