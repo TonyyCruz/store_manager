@@ -24,7 +24,7 @@ const productsControllers = {
     const { name } = req.body;
     try {
       const { status, message, id } = await productsServices.addAProduct(name);
-      res.status(status).json({ id, name } || message);
+      res.status(status).json(message || { id, name });
     } catch (err) {
       next(err);
     }
