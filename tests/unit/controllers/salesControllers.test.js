@@ -43,40 +43,52 @@ describe('Testa a camada "controllers" da rota "/sales".', () => {
     });
 
 
-  //   describe('Testa a função "productsServices.getById" com um id "existente"', () => {
+    describe.only('Testa a função "salesControllers.getSaleById" com um id "existente"', () => {
 
-  //     const req = {};
-  //     const res = {};
-  //     const next = (err) => { err };
-  //     const returnedObject = mock.products[0];
+      const req = { params: { id: 2 } };
+      const res = {};
+      const next = (err) => { err };
+      const returnedArray = [
+        {
+          "date": "2022-08-14T23:18:18.000Z",
+          "productId": 1,
+          "quantity": 5
+        },
+        {
+          "date": "2022-08-14T23:18:18.000Z",
+          "productId": 2,
+          "quantity": 10
+        }
+      ];
 
-  //     before(() => {
-  //       res.status = sinon.stub().returns(res);
-  //       res.json = sinon.stub().returns();
-  //       req.params = sinon.stub().returns();
-  //       sinon.stub(productsServices, 'getById').resolves({
-  //         status: 200, data: returnedObject
-  //       });
-  //     });
+      before(() => {
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+        req.params = sinon.stub().returns();
 
-  //     after(() => {
-  //       productsServices.getById.restore();
-  //     });
+        sinon.stub(salesServices, 'getSaleById').resolves({
+          status: 200, data: returnedArray
+        });
+      });
 
-  //     it('Verifica se a funcao "productsServices.getById" retorna um "status 200" ', async () => {
-  //       await productsControllers.getById(req, res, next);
-  //       expect(res.status.calledWith(200)).to.be.true;
-  //       expect(res.status.calledOnce).to.be.true;
-  //     });
+      after(() => {
+        salesServices.getSaleById.restore();
+      });
 
-  //     it('Verifica se o objeto é retornado corretamente', async () => {
-  //       await productsControllers.getById(req, res, next);
-  //       expect(res.json.calledWith(returnedObject)).to.be.true;
-  //     });
-  //   });
+      it('Verifica se a funcao "salesControllers.getSaleById" retorna um "status 200" ', async () => {
+        await salesControllers.getSaleById(req, res, next);
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
+      });
+
+      it('Verifica se o objeto é retornado corretamente', async () => {
+        await salesControllers.getSaleById(req, res, next);
+        expect(res.json.calledWith(returnedArray)).to.be.true;
+      });
+    });
 
 
-  //   describe('Testa a função "productsServices.getById" com um id "inexistente"', () => {
+  //   describe('Testa a função "salesControllers.getSaleById" com um id "inexistente"', () => {
 
   //     const req = {};
   //     const res = {};
@@ -93,17 +105,17 @@ describe('Testa a camada "controllers" da rota "/sales".', () => {
   //     });
 
   //     after(() => {
-  //       productsServices.getById.restore();
+  //       salesControllers.getSaleById.restore();
   //     });
 
   //     it('Verifica se retorna um status 200', async () => {
-  //       await productsControllers.getById(req, res, next);
+  //       await salesControllers.getSaleById(req, res, next);
   //       expect(res.status.calledWith(200)).to.be.true;
   //       expect(res.status.calledOnce).to.be.true;
   //     });
 
   //     it('Verifica se "data" retorna um array vazio', async () => {
-  //       await productsControllers.getById(req, res, next);
+  //       await salesControllers.getSaleById(req, res, next);
   //       expect(res.json.calledWith([])).to.be.true;
   //     });
   //   });
