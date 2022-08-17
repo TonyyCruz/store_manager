@@ -100,7 +100,7 @@ describe('Testa a camada "services" da rota "/products".', () => {
     });
 
 
-    describe.only('Testa caso a função "productsServices.addAProduct" receba dados invalidos de productsModels', () => {
+    describe('Testa caso a função "productsServices.addAProduct" receba dados invalidos de productsModels', () => {
 
       const productId = undefined;
 
@@ -118,5 +118,74 @@ describe('Testa a camada "services" da rota "/products".', () => {
         expect(result).to.deep.equals(expectedResult)
       });
     });
+  });
+
+
+  //  ========================= PUT ========================= //
+
+  describe.only('Testa o método "PUT"', () => {
+    describe('Testa caso de sucesso Da função "productsServices.updateAProduct"', () => {
+
+      const affectedRows = 1;
+
+      before(() => {
+        sinon.stub(productsModels, 'updateAProduct').resolves(affectedRows)
+      });
+      after(() => {
+        productsModels.updateAProduct.restore();
+      });
+
+      it('verifica se retorna o status 201 e id do item adicionado', async () => {
+        productId = 5;
+        const name = 'testName'
+        const result = await productsServices.updateAProduct(productId, name);
+        const expectedResult = { status: 200, data: { id: productId, name } };
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
+
+
+    describe('Testa caso da função "productsServices.updateAProduct" receber "affectedRows maior que 1"', () => {
+
+      const affectedRows = 2;
+
+      before(() => {
+        sinon.stub(productsModels, 'updateAProduct').resolves(affectedRows)
+      });
+      after(() => {
+        productsModels.updateAProduct.restore();
+      });
+
+      it('verifica se retorna o status 500 e a mensagem "2 lines were affected, Severe error"', async () => {
+        productId = 5;
+        const name = 'testName'
+        const result = await productsServices.updateAProduct(productId, name);
+        const expectedResult = { status: 500, message: { message: `${affectedRows} lines were affected, Severe error` } };
+
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
+
+    describe('Testa caso da função "productsServices.updateAProduct" receber "affectedRows" invalido', () => {
+
+      const affectedRows = 0;
+
+      before(() => {
+        sinon.stub(productsModels, 'updateAProduct').resolves(affectedRows)
+      });
+      after(() => {
+        productsModels.updateAProduct.restore();
+      });
+
+      it('verifica se retorna o status 404 e a mensagem "Action Failed" caso nenhuma linha seja alterada', async () => {
+        productId = 5;
+        const name = 'testName'
+        const result = await productsServices.updateAProduct(productId, name);
+        const expectedResult = { status: 404, message: { message: 'Action Failed' } };
+
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
+
   });
 });

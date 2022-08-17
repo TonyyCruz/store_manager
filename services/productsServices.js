@@ -3,8 +3,9 @@ const productsModels = require('../models/productsModels');
 const response = {
   notFound: { message: 'Product not found' },
   addFail: { message: 'Addition fail' },
-  severeError: { message: 'lines were affected, Severe error' },
+  severeError: 'lines were affected, Severe error',
   deleteFail: { message: 'Delete fail' },
+  actionFailed: { message: 'Action Failed' },
 };
 
 const productsServices = {
@@ -28,9 +29,9 @@ const productsServices = {
 
   updateAProduct: async (productId, name) => {
     const affectedRows = await productsModels.updateAProduct(productId, name);
-    if (!affectedRows) return { status: 404, message: response.notFound };
+    if (!affectedRows) return { status: 404, message: response.actionFailed };
     if (affectedRows > 1) {
-      return { status: 500, message: `${affectedRows} ${response.severeError}` };
+      return { status: 500, message: { message: `${affectedRows} ${response.severeError}` } };
     }
 
     return { status: 200, data: { id: productId, name } };
@@ -40,7 +41,7 @@ const productsServices = {
     const affectedRows = await productsModels.deleteAProduct(productId);
     if (!affectedRows) return { status: 404, message: response.deleteFail };
     if (affectedRows > 1) {
-      return { status: 500, message: `${affectedRows} ${response.severeError}` };
+      return { status: 500, message: { message: `${affectedRows} ${response.severeError}` } };
     }
 
     return { status: 204 };
