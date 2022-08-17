@@ -10,7 +10,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
   //  ========================= GET ========================= //
   
   describe('Testa o método "GET" da rota "/products".', () => {
-    describe('Testa a rota "/" de "productsControllers"', () => {
+    describe('Testa a rota "/" de "productsControllers.getAll"', () => {
 
       const req = {};
       const res = {};
@@ -48,14 +48,14 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
       const req = {};
       const res = {};
       const next = (err) => { err };
-      const objectWithOneProduct = mock.products[0];
+      const returnedObject = mock.products[0];
 
       before(() => {
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
         req.params = sinon.stub().returns();
         sinon.stub(productsServices, 'getById').resolves({
-          status: 200, data: objectWithOneProduct
+          status: 200, data: returnedObject
         });
       });
 
@@ -71,7 +71,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
       it('Verifica se o objeto é retornado corretamente', async () => {
         await productsControllers.getById(req, res, next);
-        expect(res.json.calledWith(objectWithOneProduct)).to.be.true;
+        expect(res.json.calledWith(returnedObject)).to.be.true;
       });
     });
 
@@ -111,7 +111,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
   //  ========================= POST ========================= //
   
-  describe('Testa o método "POST" da camada /products', () => {
+  describe('Testa o método "POST" da camada /products da função "productsControllers.addAProduct"', () => {
     describe('testa casos de sucesso', () => {
       const req = { body: { name: 'test' } };
       const res = {};
@@ -144,7 +144,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
       });
     });
 
-    describe.only('testa casos de falha', () => {
+    describe('testa casos de falha', () => {
       const req = { body: { name: 'test' } };
       const res = {};
       const next = (err) => { err };
@@ -180,15 +180,47 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
 
   //  ========================= PUT ========================= //
 
-  describe('Testa o método "PUT" da camada /products', () => {
+  describe.only('Testa o método "PUT" da camada /products função productsControllers.updateAProduct', () => {
+    describe('testa casos de sucesso', () => {
+      const req = { body: { name: 'test' }, params: 2 };
+      const res = {};
+      const next = (err) => { err };
+      const returnedObject = { id: 2, name: 'guitar' };
 
+      before(() => {
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+
+        sinon.stub(productsServices, 'updateAProduct').resolves({
+          status: 200, data: returnedObject
+        });
+      });
+
+      after(() => {
+        productsServices.updateAProduct.restore();
+      });
+
+      it('Verifica se retorna status 200', async () => {
+        await productsControllers.updateAProduct(req, res, next);
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(res.status.calledOnce).to.be.true;
+      });
+
+      it('Verifica se retorna em caso de falha envia a mensagem "Action Failed"', async () => {
+        await productsControllers.updateAProduct(req, res, next);
+        console.log(res.json.args[0]);
+        expect(res.json.calledWith(returnedObject)).to.be.true;
+      });
+    });
   });
 
 
 
   //  ========================= DELETE ========================= //
 
-  describe('Testa o método "DELETE" da camada /products', () => {
+  describe('Testa o método "DELETE" da camada /products função productsControllers.deleteAProduct', () => {
+    describe('testa casos de sucesso', () => {
 
+    });
   });
 });
