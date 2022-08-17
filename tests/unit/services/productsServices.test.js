@@ -121,9 +121,9 @@ describe('Testa a camada "services" da rota "/products".', () => {
   });
 
 
-  //  ========================= PUT ========================= //
+  //  ========================= DELETE ========================= //
 
-  describe.only('Testa o método "PUT"', () => {
+  describe('Testa o método "DELETE"', () => {
     describe('Testa caso de sucesso Da função "productsServices.updateAProduct"', () => {
 
       const affectedRows = 1;
@@ -186,6 +186,70 @@ describe('Testa a camada "services" da rota "/products".', () => {
         expect(result).to.deep.equals(expectedResult)
       });
     });
+  });
 
+  //  ========================= DELETE ========================= //
+
+
+  describe('Testa o método "DELETE"', () => {
+    describe('Testa caso de sucesso Da função "productsServices.deleteAProduct"', () => {
+
+      const affectedRows = 1;
+
+      before(() => {
+        sinon.stub(productsModels, 'deleteAProduct').resolves(affectedRows)
+      });
+      after(() => {
+        productsModels.deleteAProduct.restore();
+      });
+
+      it('verifica se retorna o status 204', async () => {
+        productId = 2;
+        const result = await productsServices.deleteAProduct(productId);
+        const expectedResult = { status: 204};
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
+
+
+    describe('Testa caso da função "productsServices.deleteAProduct" receber "affectedRows maior que 1"', () => {
+
+      const affectedRows = 2;
+
+      before(() => {
+        sinon.stub(productsModels, 'deleteAProduct').resolves(affectedRows)
+      });
+      after(() => {
+        productsModels.deleteAProduct.restore();
+      });
+
+      it('verifica se retorna o status 500 e a mensagem "2 lines were affected, Severe error"', async () => {
+        productId = 5;
+        const result = await productsServices.deleteAProduct(productId);
+        const expectedResult = { status: 500, message: { message: `${affectedRows} lines were affected, Severe error` } };
+
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
+
+    describe('Testa caso da função "productsServices.deleteAProduct" receber "affectedRows" invalido', () => {
+
+      const affectedRows = 0;
+
+      before(() => {
+        sinon.stub(productsModels, 'deleteAProduct').resolves(affectedRows)
+      });
+      after(() => {
+        productsModels.deleteAProduct.restore();
+      });
+
+      it('verifica se retorna o status 404 e a mensagem "Action Failed" caso nenhuma linha seja alterada', async () => {
+        productId = 5;
+        const result = await productsServices.deleteAProduct(productId);
+        const expectedResult = { status: 404, message: { message: 'Delete fail' } };
+
+        expect(result).to.deep.equals(expectedResult)
+      });
+    });
   });
 });
