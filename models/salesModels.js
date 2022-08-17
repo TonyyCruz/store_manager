@@ -1,14 +1,14 @@
 const connection = require('../database/connection');
 
-const addSales = async () => {
-  const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW())';
-  const [{ insertId }] = await connection.query(query);
-  return insertId;
-};
-
 const salesModels = {
+  addSales: async () => {
+    const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW())';
+    const [{ insertId }] = await connection.query(query);
+    return insertId;
+  },
+
   addSalesProducts: async (sales) => {
-    const salesId = await addSales();
+    const salesId = await salesModels.addSales();
     const query = `INSERT INTO StoreManager.sales_products (
       sale_id, product_id, quantity) VALUES (?, ?, ?)`;
 
