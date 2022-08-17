@@ -43,7 +43,7 @@ describe('Testa a camada "controllers" da rota "/products".', () => {
     });
 
 
-    describe('Testa a função "productsServices.getById" com um id "existente"', () => {
+    describe('Testa a função "productsControllers.getById" com um id "existente"', () => {
 
       const req = {};
       const res = {};
