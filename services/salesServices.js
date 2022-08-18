@@ -35,7 +35,7 @@ const salesServices = {
     if (!affectedRows) {
       return { status: 404, message: response.deleteFail };
     }
-    return { status: 200 };
+    return { status: 204 };
   },
 
   editSale: async ({ id, itemsSold }) => {

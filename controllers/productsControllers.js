@@ -20,6 +20,16 @@ const productsControllers = {
     }
   },
 
+  search: async (req, res, next) => {
+    const { q } = req.query;
+    try {
+      const { status, message, data } = await productsServices.search({ query: q });
+      res.status(status).json(data || message);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   addAProduct: async (req, res, next) => {
     const { name } = req.body;
     try {

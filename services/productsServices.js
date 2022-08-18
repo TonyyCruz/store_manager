@@ -21,6 +21,12 @@ const productsServices = {
     return { status: 200, data: product };
   },
 
+  search: async ({ query }) => {
+    const products = await productsModels.search({ query });
+    if (!products) return { status: 404, message: response.notFound };
+    return { status: 200, data: products };
+  },
+
   addAProduct: async (productId) => {
     const id = await productsModels.addAProduct(productId);
     if (!id) return { status: 404, message: response.addFail };
