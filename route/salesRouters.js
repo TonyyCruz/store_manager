@@ -10,6 +10,6 @@ salesRouters.get('/:id', salesControllers.getSaleById);
 
 salesRouters.post('/', validation.saleProducts, salesControllers.registerSale);
 
-salesRouters.delete('/:id', salesControllers.deleteSale);
+salesRouters.delete('/:id', validation.saleExists, salesControllers.deleteSale);
 
 module.exports = salesRouters;
