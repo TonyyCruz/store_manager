@@ -2,6 +2,7 @@ const salesModels = require('../models/salesModels');
 
 const response = {
   saleNotFount: { message: 'Sale not found' },
+  deleteFail: { message: 'Delete fail' },
 };
 
 const salesServices = {
@@ -26,6 +27,15 @@ const salesServices = {
       return { status: 404, message: response.saleNotFount };
     }
     return { status: 200, data };
+  },
+
+  deleteSale: async (id) => {
+    const affectedRows = await salesModels.deleteSale(id);
+
+    if (!affectedRows) {
+      return { status: 404, message: response.deleteFail };
+    }
+    return { status: 200 };
   },
 
 };

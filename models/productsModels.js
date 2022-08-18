@@ -21,14 +21,14 @@ const productsModels = {
 
   updateAProduct: async (id, name) => {
     const query = `UPDATE  StoreManager.products SET name=?
-    WHERE id=?`;
+      WHERE id=?`;
     const [{ affectedRows }] = await connection.query(query, [name, id]);
     return affectedRows;
   },
 
   deleteAProduct: async (id) => {
     const query = `DELETE FROM StoreManager.products
-    WHERE id=?`;
+      WHERE id=?`;
     const [{ affectedRows }] = await connection.query(query, [id]);
     return affectedRows;
   },

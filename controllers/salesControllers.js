@@ -28,6 +28,16 @@ const salesControllers = {
       next(err);
     }
   },
+
+  deleteSale: async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const { message, status } = await salesServices.deleteSale(id);
+      res.status(status).json(message || '');
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 module.exports = salesControllers;

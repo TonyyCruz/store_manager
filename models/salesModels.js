@@ -20,9 +20,9 @@ const salesModels = {
 
   getAll: async () => {
     const query = `SELECT
-  sp.sale_id AS saleId, s.date, sp.product_id AS productId, sp.quantity
-  FROM StoreManager.sales_products AS sp
-  INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id`;
+      sp.sale_id AS saleId, s.date, sp.product_id AS productId, sp.quantity
+      FROM StoreManager.sales_products AS sp
+      INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id`;
   
     const [data] = await connection.query(query);
     return data;
@@ -30,14 +30,31 @@ const salesModels = {
 
   getById: async (id) => {
     const query = `SELECT
-  s.date, sp.product_id AS productId, sp.quantity 
-  FROM StoreManager.sales_products AS sp
-  INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id
-  WHERE sp.sale_id=?`;
+      s.date, sp.product_id AS productId, sp.quantity 
+      FROM StoreManager.sales_products AS sp
+      INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id
+      WHERE sp.sale_id=?`;
 
     const [data] = await connection.query(query, [id]);
     return data;
   },
+
+  deleteSale: async (id) => {
+    const query = `DELETE FROM StoreManager.sales_products
+      WHERE sale_id=?`;
+
+    const [{ affectedRows }] = await connection.query(query, [id]);
+    return affectedRows;
+  },
+
+  // saleUpdate: async ({ saleId, sales }) => {
+  //   const query = `UPDATE  StoreManager.sales_products
+  //     SET name=? WHERE sale_id=? AND product_id=?`;
+  //   sales.map((item) => )
+  //     .const[{ affectedRows }] = await connection.query(query, [name, id]);
+
+  //   return affectedRows;
+  // },
 };
 
 module.exports = salesModels;
