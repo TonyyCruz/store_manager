@@ -1,18 +1,21 @@
 const connection = require('../database/connection');
 
 const salesModels = {
+  //  == FOI COLOCADA AQUI PARA SER USADA EM UM TESTE ==  //
   addSales: async () => {
     const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW())';
     const [{ insertId }] = await connection.query(query);
     return insertId;
   },
 
-  addSalesProducts: async (sales) => {
-    const salesId = await salesModels.addSales();
+  addSalesProducts: async ({ itemsSold, id }) => {
+    let salesId = id;
+    if (!id) { salesId = await salesModels.addSales(); }
+
     const query = `INSERT INTO StoreManager.sales_products (
       sale_id, product_id, quantity) VALUES (?, ?, ?)`;
 
-    const products = sales.map((item) => [salesId, item.productId, item.quantity]);
+    const products = itemsSold.map((item) => [salesId, item.productId, item.quantity]);
     Promise.all(products.map((pro) => connection.query(query, pro)));
 
     return salesId;
@@ -23,7 +26,7 @@ const salesModels = {
       sp.sale_id AS saleId, s.date, sp.product_id AS productId, sp.quantity
       FROM StoreManager.sales_products AS sp
       INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id`;
-  
+    
     const [data] = await connection.query(query);
     return data;
   },

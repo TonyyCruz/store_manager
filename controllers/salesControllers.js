@@ -38,6 +38,19 @@ const salesControllers = {
       next(err);
     }
   },
+
+  editSale: async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      const { data, status, message } = await salesServices.editSale({
+        id, itemsSold: req.body,
+      });
+      res.status(status).json(message || { id, itemsSold: data });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 module.exports = salesControllers;

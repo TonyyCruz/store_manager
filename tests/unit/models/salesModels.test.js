@@ -11,7 +11,7 @@ describe('Testa a camada "models" da rota "/sales".', () => {
   describe('Testa o método "POST"', () => {
     describe('Testa a função "salesModels.addSalesProducts"', () => {
 
-      const saladItems = [{ productId: 2, quantity: 3 }];
+      const itemsSold = [{ productId: 2, quantity: 3 }];
 
       before(() => {
         sinon.stub(connection, 'query').resolves([]);
@@ -22,8 +22,8 @@ describe('Testa a camada "models" da rota "/sales".', () => {
         salesModels.addSales.restore();
       });
 
-      it('Verifica se a rota a função retorna o valor correto', async () => {
-        const result = await salesModels.addSalesProducts(saladItems);
+      it('Verifica se a função retorna o valor correto', async () => {
+        const result = await salesModels.addSalesProducts({ itemsSold });
         expect(result).to.be.a('number');
         expect(result).to.be.equal(2);
       });

@@ -7,7 +7,7 @@ const response = {
 
 const salesServices = {
   registerSale: async (itemsSold) => {
-    const id = await salesModels.addSalesProducts(itemsSold);
+    const id = await salesModels.addSalesProducts({ itemsSold });
     return {
       id,
       data: itemsSold,
@@ -36,6 +36,15 @@ const salesServices = {
       return { status: 404, message: response.deleteFail };
     }
     return { status: 200 };
+  },
+
+  editSale: async ({ id, itemsSold }) => {
+    await salesModels.deleteSale(id)
+      .then(salesModels.addSalesProducts({ itemsSold, id }));
+    return {
+      data: itemsSold,
+      status: 200,
+    };
   },
 
 };
