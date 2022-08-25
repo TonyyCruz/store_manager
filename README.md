@@ -20,16 +20,16 @@
 - DELETE `/products/:id` ou `/sales/:id` para deletar de acordo com o id.
 
 - PUT `/products/:id` para atualizar o nome do produto.
-body
 ```jsx
+  body
   {
     "name": "ProductName"
   }
 ```
 
 - PUT `/sales/:id` para atualizar a venda.
-body
 ```jsx
+  body
   [
     {
       "productId": 1,
@@ -74,7 +74,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 _1- Clonar o repositorio_
 
 ```jsx
-https://git@github.com:TonyyCruz/store_manager.git
+https://github.com/TonyyCruz/store_manager
 ```
 
 ---
