@@ -52,8 +52,6 @@
 
 - **[Nodemon](https://www.npmjs.com/package/nodemon)**
 
-  > Veja o arquivo [package.json](https://github.com/andremarquezz/Projeto-StoreManager/blob/main/package.json)
-
 
 ---
 
@@ -74,7 +72,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 _1- Clonar o repositorio_
 
 ```jsx
-https://github.com/TonyyCruz/store_manager
+git clone git@github.com:TonyyCruz/store_manager.git
 ```
 
 ---
