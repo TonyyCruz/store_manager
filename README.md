@@ -16,6 +16,29 @@
 
 <details>
   <summary><strong>Ver rotas</strong></summary><br />
+  
+  - POST `/products` para cadastrar produtos. Utilize um body nesse formato:
+
+```jsx
+  {
+    "name": "ProductName"
+  }
+```
+  
+---
+  
+- POST `/sales` para cadastrar vendas. Utilize um body nesse formato:
+
+```jsx
+  [
+    {
+      "productId": 1,
+      "quantity":3
+    },
+  ]
+```
+  
+---
 
 - GET `/products` ou `/sales` para receber todos os produtos ou vendas.
 
@@ -33,7 +56,7 @@
 
 ---
 
-- PUT `/products/:id` para atualizar o nome do produto deve utilizar um body nesse formato:
+- PUT `/products/:id` para atualizar o nome do produto. Utilize um body nesse formato:
 
 ```jsx
   {
@@ -42,13 +65,13 @@
 ```
 ---
 
-- PUT `/sales/:id` para atualizar a venda deve utilizar um body nesse formato:
+- PUT `/sales/:id` para atualizar a venda. Utilize um body nesse formato:
 
 ```jsx
   [
     {
       "productId": 1,
-      "quantity":1
+      "quantity":2
     },
   ]
 ```
