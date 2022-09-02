@@ -3,20 +3,35 @@
 
 ---
 
+<br>
+
 <h2 align="center">📃 Sobre o Projeto</h2>
 
 <p align="center">A API desenvolvida é um sistema de gerenciamento de vendas no formato dropshipping em que será possível criar, visualizar, deletar e atualizar produtos e vendas. A API é <b>RESTful</b> e a gestão de dados é feita com o <b>MySQL</b>.
 </p>
 
-<p align="center">Utilize os caminhos</p>
+<br>
+
+<h2 align="center">Rotas utilizáveis</h2>
+
+<details>
+  <summary><strong>Ver rotas</strong></summary><br />
 
 - GET `/products` ou `/sales` para receber todos os produtos ou vendas.
 
+---
+
 - GET `/products/:id` ou `/sales/:id` para receber produtos ou vendas de acordo com o id.
+
+---
 
 - GET `/products/search?q=<busca>` para buscar produto por palavra chave.
 
+---
+
 - DELETE `/products/:id` ou `/sales/:id` para deletar produtos ou vendas de acordo com o id.
+
+---
 
 - PUT `/products/:id` para atualizar o nome do produto deve utilizar um body nesse formato:
 
@@ -25,6 +40,7 @@
     "name": "ProductName"
   }
 ```
+---
 
 - PUT `/sales/:id` para atualizar a venda deve utilizar um body nesse formato:
 
@@ -36,6 +52,10 @@
     },
   ]
 ```
+
+</details>
+
+<br>
 
 ---
 
