@@ -12,14 +12,6 @@
 
 ---
 
-<br>
-
-<h3 align="center">Diagrama DER (Diagrama Entidade-Relacionamento)</h3>
-
-<img src="diagramaDB.png">
-
----
-
 <h2 align="center">Rotas utilizáveis</h2>
 
 <details>
