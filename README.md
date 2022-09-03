@@ -14,7 +14,7 @@
 
 <br>
 
-<h3 align="center">Diagrama DER (Diagrama Entidade Relacionamento)</h3>
+<h3 align="center">Diagrama DER (Diagrama Entidade-Relacionamento)</h3>
 
 <img src="diagramaDB.png">
 
