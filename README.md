@@ -10,7 +10,15 @@
 <p align="center">A API desenvolvida é um sistema de gerenciamento de vendas no formato dropshipping em que será possível criar, visualizar, deletar e atualizar produtos e vendas. A API é <b>RESTful</b> e a gestão de dados é feita com o <b>MySQL</b>.
 </p>
 
+---
+
 <br>
+
+<h3 align="center">Diagrama DER (Diagrama Entidade Relacionamento)</h3>
+
+<img src="diagramaDB.png">
+
+---
 
 <h2 align="center">Rotas utilizáveis</h2>
 
