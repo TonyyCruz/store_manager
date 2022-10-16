@@ -1,5 +1,5 @@
 <h1 align="center">Projeto Store Manager</h1>
-<p align="center">Desenvolvimento de uma API utilizando a arquitetura MSC (model-service-controller)</p>
+<p align="center">Desenvolvimento de uma API de vendas utilizando a arquitetura MSC (model-service-controller)</p>
 
 ---
 
