@@ -119,7 +119,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ---
 
-_1- Clonar o repositorio_
+_Clone o repositorio_
 
 ```jsx
 git clone git@github.com:TonyyCruz/store_manager.git
